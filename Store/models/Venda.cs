@@ -66,7 +66,8 @@ namespace Store
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Venda [Code: {Code}]");
+            sb.AppendLine($"Cliente [Codigo: {this.customer}]");
+            sb.AppendLine($"Venda [Codigo: {Code}]");
             sb.AppendLine("Produtos:");
 
             foreach (var produto in produtos)

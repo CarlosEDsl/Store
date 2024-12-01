@@ -54,6 +54,19 @@ namespace Store
             Console.WriteLine($"Total de vendas: {totalDeVendas}");
         }
 
+        public void DeletarVenda(int codigo)
+        {
+            try
+            {
+                Venda venda = this.BuscarVenda(codigo);
+                this._vendas.Remove(venda);
+                Console.WriteLine("Venda deletada");
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+
         public List<Venda> BuscarVendasUsuario(int codigoUsuario)
         {
             List<Venda> vendas = this._vendas.FindAll(venda => venda.Code == codigoUsuario);

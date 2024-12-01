@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -135,34 +136,39 @@ namespace Store{
         
         static void ProdutoManager(){
             int op;
-            
-            Console.WriteLine("\n==== GERENCIAR PRODUTO ====\n");
-            Console.WriteLine("1. REGISTRAR PRODUTO");
-            Console.WriteLine("2. BUSCAR PRODUTO");
-            Console.WriteLine("3. LISTAR PRODUTOS");
-            Console.WriteLine("4. DELETAR PRODUTO");
-            Console.WriteLine("5. VOLTAR");
-            op = LerInput<int>();
 
-            switch (op){
-                case 1:
-                    RegistrarProduto();
-                    break;
-                case 2:
-                    EncontrarProduto();
-                    break;
-                case 3:
-                    ListarProdutos();
-                    break;
-                case 4:
-                    RemoverProduto();
-                    break;
-                case 5:
-                    break;
-                default:
-                    Console.WriteLine("OPÇÃO INVÁLIDA");
-                    break;
-            }
+            do
+            {
+
+                Console.WriteLine("\n==== GERENCIAR PRODUTO ====\n");
+                Console.WriteLine("1. REGISTRAR PRODUTO");
+                Console.WriteLine("2. BUSCAR PRODUTO");
+                Console.WriteLine("3. LISTAR PRODUTOS");
+                Console.WriteLine("4. DELETAR PRODUTO");
+                Console.WriteLine("5. VOLTAR");
+                op = LerInput<int>();
+
+                switch (op) {
+                    case 1:
+                        RegistrarProduto();
+                        break;
+                    case 2:
+                        EncontrarProduto();
+                        break;
+                    case 3:
+                        ListarProdutos();
+                        break;
+                    case 4:
+                        RemoverProduto();
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        Console.WriteLine("OPÇÃO INVÁLIDA");
+                        break;
+                }
+
+            } while (op != 5);
 
             void RegistrarProduto(){
                 Console.WriteLine("\n==== REGISTRANDO PRODUTO ====\n");
@@ -180,7 +186,7 @@ namespace Store{
             }
 
             void EncontrarProduto() {
-                Console.WriteLine("\nBUSCANDO CLIENTE\n");
+                Console.WriteLine("\nBUSCANDO PRODUTO\n");
 
                 int code = LerInput<int>(
                     valor => valor > 0, 
@@ -235,7 +241,8 @@ namespace Store{
                 Console.WriteLine("2. BUSCAR VENDA");
                 Console.WriteLine("3. MOSTRAR VENDAS");
                 Console.WriteLine("4. TOTAL DAS VENDAS");
-                Console.WriteLine("5. VOLTAR");
+                Console.WriteLine("5. DELETAR VENDA");
+                Console.WriteLine("6. VOLTAR");
                 op = LerInput<int>();
 
                 switch (op)
@@ -253,13 +260,16 @@ namespace Store{
                         TotalVendas();
                         break;
                     case 5:
+                        RemoverVenda();
+                        break;
+                    case 6:
                         break;
                     default:
                         Console.WriteLine("Opção invalida");
                         break;
                 }
 
-            } while (op != 5);
+            } while (op != 6);
 
             void CriarVenda()
             {
@@ -334,7 +344,19 @@ namespace Store{
                 vendaDAO.TotaldeVendas();
             }
 
+            void RemoverVenda()
+            {
+                Console.WriteLine("Insira o código da venda a ser removida");
+                int codigo = LerInput<int>();
 
+                try
+                {
+                    vendaDAO.DeletarVenda(codigo);
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         static T LerInput<T>(Func<T, bool> verificacao = null, string mensagemErro = null)

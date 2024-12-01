@@ -44,15 +44,21 @@ namespace Store
 
         public void DeletarProduto(int codigo) {
             Produto produto = this._produtos.Find(x => x.Code == codigo);
-            if (this.vendaDAO.VendasComProduto(codigo) != null)
-                throw new Exception("Esse produto possuí esta em venda(s)");
-            if(produto != null) {
-
-                
-                this._produtos.Remove(produto);
+            try
+            {
+                if (this.vendaDAO.VendasComProduto(codigo).Count > 0)
+                {
+                    throw new Exception("Esse produto possuí esta em venda(s)");
+                }
+                if (produto == null)
+                {
+                    throw new Exception("Produto não encontrado");
+                }
+                    this._produtos.Remove(produto);
+                    Console.WriteLine("Produto Deletado");
             }
-            else {
-                throw new Exception("Produto não encontrado");
+            catch (Exception ex) { 
+                throw ex;
             }
         }
 
