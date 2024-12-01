@@ -59,6 +59,9 @@ namespace Store
             List<Venda> vendas = this._vendas.FindAll(venda => venda.Code == codigoUsuario);
             return vendas;
         }
+        public List<Venda> VendasComProduto(int codigoProduto) { 
+            return this._vendas.FindAll(venda => venda.Produtos.Find(produto => produto.Code == codigoProduto) != null);
+        }
 
     }
 

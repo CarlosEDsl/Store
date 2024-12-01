@@ -10,9 +10,12 @@ namespace Store
     internal class ProdutoDAO {
 
         private readonly List<Produto> _produtos;
+        private VendaDAO vendaDAO;
 
-        public ProdutoDAO() {
+        public ProdutoDAO(VendaDAO vendaDAO)
+        {
             this._produtos = new List<Produto>();
+            this.vendaDAO = vendaDAO;
         }
 
         public Produto CadastrarProduto(Produto produto) {
@@ -41,8 +44,11 @@ namespace Store
 
         public void DeletarProduto(int codigo) {
             Produto produto = this._produtos.Find(x => x.Code == codigo);
-            
+            if (this.vendaDAO.VendasComProduto(codigo) != null)
+                throw new Exception("Esse produto possuí esta em venda(s)");
             if(produto != null) {
+
+                
                 this._produtos.Remove(produto);
             }
             else {

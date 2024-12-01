@@ -9,7 +9,7 @@ namespace Store{
     {
         private static VendaDAO vendaDAO = new VendaDAO();
         private static CustomerDAO customerDAO = new CustomerDAO(vendaDAO);
-        private static ProdutoDAO produtoDAO = new ProdutoDAO();
+        private static ProdutoDAO produtoDAO = new ProdutoDAO(vendaDAO);
 
         static void Main(string[] args)
         {
@@ -46,7 +46,8 @@ namespace Store{
                 Console.WriteLine("\n==== GERENCIAR CLIENTE ====\n");
                 Console.WriteLine("1. REGISTRAR CLIENTE");
                 Console.WriteLine("2. BUSCAR CLIENTE");
-                Console.WriteLine("3. VOLTAR");
+                Console.WriteLine("3. DELETAR CLIENTE");
+                Console.WriteLine("4. VOLTAR");
                 op = LerInput<int>();
 
                 switch (op) {
